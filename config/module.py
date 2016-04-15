@@ -13,12 +13,10 @@ class Module:
 
     def save(userid, deviceid, ipaddress):
         conn = sqlite3.connect(sqlite_file)
-        self.cursor = conn.cursor()
-
-        # your shit here
-        """INSERT INTO fingerprintid 
-        """
-
+        c = conn.cursor()
+        c.execute('''CREATE TABLE fingerprintid
+             (userid text, ipaddress text)''')
+        c.execute("INSERT INTO fingerprintid VALUES ('?','?')")
         conn.commit()
         conn.close()
         pass
