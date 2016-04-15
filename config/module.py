@@ -5,13 +5,13 @@ sqlite_file = 'data.db'
 table_one = 'fingerprintid'
 table_two = 'deviceid'
 table_three = 'userid'
-table_four = 'ipaddress' 
+table_four = 'ipaddress'
 column_user = 'INTEGER'
 colump_ip = 'TEXT'
 
 # Connect
 conn = sqlite3.connect(sqlite_file)
-c = conn.cursor() 
+c = conn.cursor()
 
 #create user column
 c.execute('CREATE TABLE {tn} ({nf} {ft})'\
