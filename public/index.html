@@ -22,32 +22,39 @@
 			send(userid);
 		}
 
+		function track(account,userid,fingerprint)
+		{
+			var _sift = window._sift = window._sift || [];
+			_sift.push([ '_setAccount', account ]);
+			_sift.push([ '_setUserId', userid ]);
+			_sift.push([ '_setSessionId', fingerprint ]);
+			_sift.push([ '_trackPageview' ]);
+
+			(function(d, s, id) {
+				var e, f = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) {
+					return;
+				}
+				e = d.createElement(s);
+				e.id = id;
+				e.src = 'https://cdn.siftscience.com/s.js';
+				f.parentNode.insertBefore(e, f);
+			})(document, 'script', 'sift-beacon');
+		}
+		
 		function send(userid) {
 			new Fingerprint2().get(function(fingerprint, components) {
 
-				var _sift = window._sift = window._sift || [];
-				_sift.push([ '_setAccount', '8099405ffa' ]);
-				_sift.push([ '_setUserId', userid ]);
-				_sift.push([ '_setSessionId', fingerprint ]);
-				_sift.push([ '_trackPageview' ]);
 
-				(function(d, s, id) {
-					var e, f = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) {
-						return;
-					}
-					e = d.createElement(s);
-					e.id = id;
-					e.src = 'https://cdn.siftscience.com/s.js';
-					f.parentNode.insertBefore(e, f);
-				})(document, 'script', 'sift-beacon');
-
+				track('8099405ffa',userid,fingerprint);
+				track('0026e0666a',userid,fingerprint);
+				
 				var data = 'userid=' + userid + '&deviceid=' + fingerprint;
 
 				console.log('userid=' + userid);
 				console.log('deviceid=' + fingerprint);
 
-				var jqxhr = $.post('//localhost:5000/fu', data, function() {
+				var jqxhr = $.post('//localhost:5000/login/', data, function() {
 					alert("success");
 				}).done(function() {
 					alert("second success");
