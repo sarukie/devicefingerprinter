@@ -12,42 +12,67 @@
 <script
 	src="//cdn.jsdelivr.net/fingerprintjs2/1.1.3/fingerprint2.min.js"
 	charset="utf-8" type="text/javascript"></script>
-<script type="text/javascript">
-	var _user_id = 'cool';
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
 
-	new Fingerprint2().get(function(fingerprint, components) {
+		var userid = getParameterByName('userid');
 
-		var _sift = window._sift = window._sift || [];
-		_sift.push([ '_setAccount', '09468acb50' ]);
-		_sift.push([ '_setUserId', _user_id ]);
-		_sift.push([ '_setSessionId', fingerprint ]);
-		_sift.push([ '_trackPageview' ]);
+		if (userid != '') {
+			$('input#userid').val(userid);
+			send(userid);
+		}
 
-		(function(d, s, id) {
-			var e, f = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {
-				return;
-			}
-			e = d.createElement(s);
-			e.id = id;
-			e.src = 'https://cdn.siftscience.com/s.js';
-			f.parentNode.insertBefore(e, f);
-		})(document, 'script', 'sift-beacon');
-		
-		var data = 'userid='+_user_id+'&deviceid='+fingerprint;
+		function send(userid) {
+			new Fingerprint2().get(function(fingerprint, components) {
 
-		$(document).ready(function() {
-			var jqxhr = $.post('//localhost:5000/fu', data , function() {
-				alert("success");
-			}).done(function() {
-				alert("second success");
-			}).fail(function() {
-				alert("error");
-			}).always(function() {
-				alert("finished");
+				var _sift = window._sift = window._sift || [];
+				_sift.push([ '_setAccount', '8099405ffa' ]);
+				_sift.push([ '_setUserId', userid ]);
+				_sift.push([ '_setSessionId', fingerprint ]);
+				_sift.push([ '_trackPageview' ]);
+
+				(function(d, s, id) {
+					var e, f = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {
+						return;
+					}
+					e = d.createElement(s);
+					e.id = id;
+					e.src = 'https://cdn.siftscience.com/s.js';
+					f.parentNode.insertBefore(e, f);
+				})(document, 'script', 'sift-beacon');
+
+				var data = 'userid=' + userid + '&deviceid=' + fingerprint;
+
+				console.log('userid=' + userid);
+				console.log('deviceid=' + fingerprint);
+
+				var jqxhr = $.post('//localhost:5000/fu', data, function() {
+					alert("success");
+				}).done(function() {
+					alert("second success");
+				}).fail(function() {
+					alert("error");
+				}).always(function() {
+					alert("finished");
+				});
+
 			});
-		});
+		}
 	});
+
+	function getParameterByName(name, url) {
+		if (!url)
+			url = window.location.href;
+		name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i"), results = regex
+				.exec(url);
+		if (!results)
+			return '';
+		if (!results[2])
+			return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 </script>
 
 </head>
@@ -59,7 +84,9 @@
 		<form method="get" action="/">
 			<div class="form-group">
 				<label for="userid">User Id:</label> <input type="text"
-					class="form-control" id="userid" placeholder="423423" required>
+					class="form-control" name="userid" id="userid" placeholder="423423"
+					autocomplete="off"
+					required>
 			</div>
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		</form>
