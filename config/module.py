@@ -15,7 +15,7 @@ class Module:
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
         c.execute('''CREATE TABLE fingerprintid
-             (userid text, ipaddress text)''')
+             (userid text, deviceid text, ipaddress text)''')
         c.execute("INSERT INTO fingerprintid VALUES (?,?,?)", userid, deviceid, ipaddress)
         conn.commit()
         conn.close()
