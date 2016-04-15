@@ -9,10 +9,22 @@ table_four = 'ipaddress'
 column_user = 'INTEGER'
 colump_ip = 'TEXT'
 
-# Connect
-conn = sqlite3.connect(sqlite_file)
-c = conn.cursor()
+class Module:
 
+    def save(userid, deviceid, ipaddress):
+        conn = sqlite3.connect(sqlite_file)
+        self.cursor = conn.cursor()
+
+        # your shit here
+        """INSERT INTO fingerprintid 
+        """
+
+        conn.commit()
+        conn.close()
+        pass
+
+
+# Connect
 #create user column
 c.execute('CREATE TABLE {tn} ({nf} {ft})'\
         .format(tn=table_three, nf=new_field, ft=column_user))
@@ -22,5 +34,3 @@ c.execute('CREATE TABLE {tn} ({nf} {ft})'\
         .format(tn=table_four, nf=new_field, ft=column_ip))
 
 # Close Connection
-conn.commit()
-conn.close()
