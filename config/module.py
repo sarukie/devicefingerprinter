@@ -16,19 +16,7 @@ class Module:
         c = conn.cursor()
         c.execute('''CREATE TABLE fingerprintid
              (userid text, ipaddress text)''')
-        c.execute("INSERT INTO fingerprintid VALUES ('?','?')")
+        c.execute("INSERT INTO fingerprintid VALUES (?,?,?)", userid, deviceid, ipaddress)
         conn.commit()
         conn.close()
-        pass
-
-
-# Connect
-#create user column
-c.execute('CREATE TABLE {tn} ({nf} {ft})'\
-        .format(tn=table_three, nf=new_field, ft=column_user))
-
-#create ipaddress column
-c.execute('CREATE TABLE {tn} ({nf} {ft})'\
-        .format(tn=table_four, nf=new_field, ft=column_ip))
-
-# Close Connection
+        return
