@@ -22,8 +22,7 @@
 			send(userid);
 		}
 
-		function track(account,userid,fingerprint)
-		{
+		function track(account, userid, fingerprint) {
 			var _sift = window._sift = window._sift || [];
 			_sift.push([ '_setAccount', account ]);
 			_sift.push([ '_setUserId', userid ]);
@@ -41,15 +40,19 @@
 				f.parentNode.insertBefore(e, f);
 			})(document, 'script', 'sift-beacon');
 		}
-		
+
 		function send(userid) {
 			new Fingerprint2().get(function(fingerprint, components) {
 
+				track('8099405ffa', userid, fingerprint);
+				track('0026e0666a', userid, fingerprint);
 
-				track('8099405ffa',userid,fingerprint);
-				track('0026e0666a',userid,fingerprint);
+				var data = {
+					"userid" : userid,
+					"deviceid" : fingerprint
+				};
 				
-				var data = 'userid=' + userid + '&deviceid=' + fingerprint;
+				console.log(data);
 
 				console.log('userid=' + userid);
 				console.log('deviceid=' + fingerprint);
@@ -92,8 +95,7 @@
 			<div class="form-group">
 				<label for="userid">User Id:</label> <input type="text"
 					class="form-control" name="userid" id="userid" placeholder="423423"
-					autocomplete="off"
-					required>
+					autocomplete="off" required>
 			</div>
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		</form>
