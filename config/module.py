@@ -11,3 +11,4 @@ class Module:
         conn.commit()
         conn.close()
         return
+        c.execute("SELECT * FROM fingerprintid")
