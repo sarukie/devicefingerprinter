@@ -39,8 +39,8 @@
 				e.src = 'https://cdn.siftscience.com/s.js';
 				f.parentNode.insertBefore(e, f);
 			})(document, 'script', 'sift-beacon');
-			
-			console.log('accountid:'+account);
+
+			console.log('accountid:' + account);
 		}
 
 		function send(userid) {
@@ -53,22 +53,26 @@
 					"userid" : userid,
 					"deviceid" : fingerprint
 				};
-				
+
 				console.log(data);
 
 				console.log('userid=' + userid);
 				console.log('deviceid=' + fingerprint);
 
 				$.ajax({
-				    url: '//localhost:5000/login/',
-				    data: data,
-				    type: 'POST',
-				    crossDomain: true,
-				    dataType: 'jsonp',
-				    success: function() { alert("Success"); },
-				    error: function() { alert('Failed!'); }
+					url : '//localhost:5000/login/',
+					data : data,
+					type : 'POST',
+					crossDomain : true,
+					dataType : 'application/json',
+					success : function(message) {
+						console.log(message);
+					},
+					error : function(message) {
+						console.log(message);
+					}
 				});
-				
+
 			});
 		}
 	});
@@ -101,7 +105,7 @@
 			</div>
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		</form>
-		
+
 		<pre class="hidden"></pre>
 
 	</div>
