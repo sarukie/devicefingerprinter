@@ -1,5 +1,5 @@
 import sqlite3
-
+sqlite_file = 'data.db'
 class Module:
 
     def save(userid, deviceid, ipaddress):
