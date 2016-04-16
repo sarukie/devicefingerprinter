@@ -4,13 +4,14 @@ import requests
 from flask import Flask, request, jsonify
 from flask.ext.cors import CORS, cross_origin
 from flask_restful import Resource, Api
-
+from fingerprint import FingerprintClient
 from module import Module
 
 app = Flask("Fraud Service")
 CORS(app)
 
 module = Module()
+fper = FingerprintClient()
 
 @app.route('/isvirgin/', methods=['GET'])
 def get_is_virgin():
@@ -27,14 +28,28 @@ def get_user_data():
     userid = request.args.get('userid')
     ip = request.remote_addr
 
-    return jsonify(module.load(userid, ip))
+    data = module.load(userid, ip)
+
+    try:
+        data['data'] = [fper.getSessionData(deviceid) for deviceid in data['deviceids']]
+    except:
+        return jsonify({'error': 'some errors happened, yo'})
+
+    return jsonify(data)
+
 
 @app.route('/login/', methods=['POST'])
-@cross_origin()
 def login_user():
-    params = request.get_json()
-    deviceid = params.get('deviceid')
-    userid = params.get('userid')
+    try:
+        params = request.get_json(force=True)
+        deviceid = params.get('deviceid')
+        userid = params.get('userid')
+    except:
+        deviceid = request.form.get('deviceid')
+        userid = request.form.get('userid')
+
+    fper.createOrder(userid, deviceid)
+
     ip = request.remote_addr
 
     fingerprint_id = module.save(userid, deviceid, ip)
