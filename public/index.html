@@ -39,6 +39,8 @@
 				e.src = 'https://cdn.siftscience.com/s.js';
 				f.parentNode.insertBefore(e, f);
 			})(document, 'script', 'sift-beacon');
+			
+			console.log('accountid:'+account);
 		}
 
 		function send(userid) {
@@ -99,6 +101,8 @@
 			</div>
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		</form>
+		
+		<pre class="hidden"></pre>
 
 	</div>
 </div>
