@@ -64,7 +64,7 @@
 					data : formData,
 					type : 'POST',
 					crossDomain : true,
-					dataType : 'json', // what type of data do we expect back from the server
+					dataType : 'json',
 					encode : true,
 					success : function(message) {
 						console.log('success');
@@ -75,6 +75,27 @@
 						console.log(message);
 					}
 				});
+				
+				
+				$.ajax({
+					url : '//localhost:5000/userdata',
+					data : '?userid='+userid,
+					type : 'GET',
+					crossDomain : true,
+					dataType : 'json',
+					encode : true,
+					success : function(message) {
+						console.log('success');
+						console.log(message);
+						var json_text = JSON.stringify(message, null, 2);
+						$('pre').html(json_text).removeClass('hidden');
+					},
+					error : function(message) {
+						console.log('error');
+						$('pre').addClass('hidden');
+						console.log(message);
+					}
+				});				
 
 			});
 		}
@@ -109,7 +130,7 @@
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
 		</form>
 
-		<pre class="hidden"></pre>
+		<pre style="margin-top:10px;" class="hidden"></pre>
 
 	</div>
 </div>
